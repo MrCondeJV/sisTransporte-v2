@@ -85,6 +85,11 @@ class ServiceOrder extends Model
         return $this->hasOne(FuecDocument::class);
     }
 
+    public function fuecDocument(): HasOne
+    {
+        return $this->hasOne(FuecDocument::class);
+    }
+
     public function checklists(): HasMany
     {
         return $this->hasMany(PreoperationalChecklist::class);

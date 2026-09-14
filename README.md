@@ -146,6 +146,11 @@ Para probar la telemetría GPS, georreferenciación y eventos de broadcast (Fase
 php artisan test --filter=GpsTelemetryTest
 ```
 
+Para probar la API REST móvil de conductores con Sanctum (Fase 7):
+```bash
+php artisan test --filter=DriverApiTest
+```
+
 ---
 
 ## 📋 Hoja de Ruta del Proyecto
@@ -158,5 +163,5 @@ El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROAD
 * **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación *(✅ Completada)*.
 * **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento *(✅ Completada)*.
 * **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard *(✅ Completada)*.
-* **Fase 7:** API REST para App Móvil de Conductores (Sanctum) *(🔄 Próxima)*.
-* **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción.
+* **Fase 7:** API REST para App Móvil de Conductores (Sanctum) *(✅ Completada)*.
+* **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción *(🔄 Próxima)*.
