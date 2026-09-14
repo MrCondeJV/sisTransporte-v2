@@ -41,8 +41,8 @@ class AdminPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
+            ->domains(config('tenancy.central_domains'))
             ->middleware([
-                \Stancl\Tenancy\Middleware\PreventAccessFromTenantDomains::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
