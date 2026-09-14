@@ -1,0 +1,46 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\User;
+use App\Models\Tenant;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+
+class DatabaseSeeder extends Seeder
+{
+    public function run(): void
+    {
+        // 1. Crear SuperAdmin en base de datos central
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@sistransporte.com'],
+            [
+                'name' => 'Super Administrador',
+                'password' => Hash::make('admin123456'),
+                'email_verified_at' => now(),
+            ]
+        );
+
+        $this->command->info("✅ Superadmin central creado: admin@sistransporte.com / admin123456");
+
+        // 2. Crear Empresa Demo si no existe
+        $tenant = Tenant::find('empresa1');
+        if (!$tenant) {
+            $tenant = Tenant::create([
+                'id' => 'empresa1',
+                'name' => 'Transportes Kemuel S.A.S.',
+                'nit' => '901234567-8',
+                'email' => 'contacto@transporteskemuel.com',
+                'phone' => '3001234567',
+                'address' => 'Calle 100 # 15-20, Bogotá',
+                'is_active' => true,
+            ]);
+
+            $tenant->domains()->create([
+                'domain' => 'empresa1.localhost',
+            ]);
+
+            $this->command->info("✅ Empresa demo 'empresa1' creada con dominio 'empresa1.localhost'");
+        }
+    }
+}
