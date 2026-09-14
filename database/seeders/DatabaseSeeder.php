@@ -22,12 +22,24 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $adminEmpresaCentral = User::firstOrCreate(
+            ['email' => 'admin@empresa.com'],
+            [
+                'name' => 'Admin Empresa',
+                'password' => Hash::make('admin123456'),
+                'email_verified_at' => now(),
+            ]
+        );
+
         $superAdminRole = Role::firstOrCreate(['name' => 'SuperAdmin']);
         if (! $admin->hasRole('SuperAdmin')) {
             $admin->assignRole($superAdminRole);
         }
+        if (! $adminEmpresaCentral->hasRole('SuperAdmin')) {
+            $adminEmpresaCentral->assignRole($superAdminRole);
+        }
 
-        $this->command->info('✅ Superadmin central creado y rol asignado: admin@sistransporte.com / admin123456');
+        $this->command->info('✅ Superadmins centrales creados (admin@sistransporte.com y admin@empresa.com con admin123456)');
 
         // 2. Crear Empresa Demo si no existe
         $tenant = Tenant::find('empresa1');

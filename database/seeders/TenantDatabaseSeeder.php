@@ -38,6 +38,19 @@ class TenantDatabaseSeeder extends Seeder
 
         $admin->assignRole('Administrador');
 
+        // Administrador plataforma también accesible en el tenant
+        $superAdminInTenant = User::firstOrCreate(
+            ['email' => 'admin@sistransporte.com'],
+            [
+                'name' => 'Super Administrador (Plataforma)',
+                'username' => 'admin_central',
+                'password' => Hash::make('admin123456'),
+                'is_active' => true,
+                'email_verified_at' => now(),
+            ]
+        );
+        $superAdminInTenant->assignRole('Administrador');
+
         // 3. Crear Conductor de prueba
         $driver = User::firstOrCreate(
             ['email' => 'conductor@empresa.com'],

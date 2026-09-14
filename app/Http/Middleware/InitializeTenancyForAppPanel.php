@@ -24,7 +24,7 @@ class InitializeTenancyForAppPanel
         $host = $request->getHost();
         $centralDomains = config('tenancy.central_domains', ['sistransporte-v2.test', 'localhost', '127.0.0.1']);
 
-        // 1. Si NO es un dominio central, intentar resolver por tabla de dominios
+        // 1. Si NO es un dominio central, intentar resolver por tabla de dominios o subdominio
         if (! in_array($host, $centralDomains)) {
             $domainRecord = Domain::where('domain', $host)->first();
             if ($domainRecord && $domainRecord->tenant) {
@@ -46,8 +46,34 @@ class InitializeTenancyForAppPanel
             }
         }
 
-        // 2. Si es dominio central (o fallback): verificar parámetro de consulta ?tenant=xxx
+        // 2. Si la petición es directamente para el panel central (/admin), NO inicializar tenancy
+        if ($request->is('admin') || $request->is('admin/*')) {
+            return $next($request);
+        }
+
+        // 3. Peticiones de Livewire o APIs internas:
+        if ($request->is('livewire*') || str_contains($request->path(), 'livewire')) {
+            $referer = $request->header('referer') ?? '';
+            // Si proviene del panel central /admin, NO inicializar tenancy
+            if (str_contains($referer, '/admin')) {
+                return $next($request);
+            }
+        } elseif (! $request->is('app') && ! $request->is('app/*')) {
+            // Si no es /app ni Livewire para /app, continuar sin tenancy (ej: / bienvenida)
+            return $next($request);
+        }
+
+        // 4. Resolver Tenant para el panel operativo (/app o Livewire de /app):
+        // A. Parámetro de consulta ?tenant=xxx en request o en referer
         $tenantId = $request->query('tenant') ?? $request->input('tenant');
+        if (! $tenantId && ($referer = $request->header('referer'))) {
+            $query = parse_url($referer, PHP_URL_QUERY);
+            if ($query) {
+                parse_str($query, $queryParams);
+                $tenantId = $queryParams['tenant'] ?? null;
+            }
+        }
+
         if ($tenantId) {
             $tenant = Tenant::find($tenantId);
             if ($tenant) {
@@ -60,7 +86,7 @@ class InitializeTenancyForAppPanel
             }
         }
 
-        // 3. Verificar sesión previa
+        // B. Sesión activa
         if ($request->hasSession() && ($savedTenantId = $request->session()->get('active_tenant_id'))) {
             $tenant = Tenant::find($savedTenantId);
             if ($tenant) {
@@ -70,7 +96,7 @@ class InitializeTenancyForAppPanel
             }
         }
 
-        // 4. Fallback para desarrollo local: cargar la empresa primaria (empresa1 o primera existente)
+        // C. Fallback para desarrollo local: cargar la empresa primaria (empresa1 o primera existente)
         $defaultTenant = Tenant::find('empresa1') ?? Tenant::first();
         if ($defaultTenant) {
             if ($request->hasSession()) {
