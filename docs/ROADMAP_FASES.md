@@ -106,6 +106,7 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
 * **Pruebas:**
   * Inserción por lotes de telemetría sin latencia.
   * Emisión de eventos de ubicación vía WebSockets.
+* **Estado:** ✅ **Completada.** (Implementado `GpsTelemetryService`, evento broadcast `GpsLocationReceived`, Centro de Control Wallboard interactivo con Leaflet/OpenStreetMap y KPIs en vivo `OpsWallboard`, suite `GpsTelemetryTest`).
 
 ---
 
