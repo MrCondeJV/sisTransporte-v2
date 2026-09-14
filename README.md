@@ -121,16 +121,26 @@ Para probar la resolución de dominios en Laravel Herd:
 php artisan test --filter=DomainResolutionTest
 ```
 
+Para probar el control de flota, conductores y alertas de vencimiento (Fase 2):
+```bash
+php artisan test --filter=FleetAndPersonnelTest
+```
+
+Para probar operaciones, ciclo de vida de órdenes, checklist preoperacional y bloqueo normativo (Fase 3):
+```bash
+php artisan test --filter=OperationsAndChecklistTest
+```
+
 ---
 
 ## 📋 Hoja de Ruta del Proyecto
 
 El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROADMAP_FASES.md`](docs/ROADMAP_FASES.md):
 
-* **Fase 1:** Núcleo Multi-tenant, Dominios y Autenticación Central *(Completada)*.
-* **Fase 2:** Gestión de Flota, Personal, Clientes, Aliados y Contratos *(En Progreso)*.
-* **Fase 3:** Operaciones, Órdenes de Servicio y Checklist Preoperacional.
-* **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación.
+* **Fase 1:** Núcleo Multi-tenant, Dominios y Autenticación Central *(✅ Completada)*.
+* **Fase 2:** Gestión de Flota, Personal, Clientes, Aliados y Contratos *(✅ Completada)*.
+* **Fase 3:** Operaciones, Órdenes de Servicio y Checklist Preoperacional *(✅ Completada)*.
+* **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación *(🔄 Próxima)*.
 * **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento.
 * **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard.
 * **Fase 7:** API REST para App Móvil de Conductores (Sanctum).

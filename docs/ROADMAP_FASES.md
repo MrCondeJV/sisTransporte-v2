@@ -63,6 +63,7 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
 * **Pruebas:**
   * Bloqueo de asignación si un vehículo o conductor tiene documentos vencidos.
   * Aprobación y registro de checklist diario.
+* **Estado:** ✅ **Completada.** (Implementado `OperationValidationService`, `ServiceOrderResource`, `PreoperationalChecklistResource`, `ServiceIncidentResource` y suite `OperationsAndChecklistTest`).
 
 ---
 

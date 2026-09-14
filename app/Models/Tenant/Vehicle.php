@@ -85,6 +85,39 @@ class Vehicle extends Model
         };
     }
 
+    public function isEligibleForService(): bool
+    {
+        return empty($this->getEligibilityErrors());
+    }
+
+    public function getEligibilityErrors(): array
+    {
+        $errors = [];
+        $today = now()->startOfDay();
+
+        if ($this->status !== 'Activo') {
+            $errors[] = "El vehículo se encuentra en estado '{$this->status}'.";
+        }
+
+        $documents = [
+            'SOAT' => $this->soat_expiration,
+            'Revisión Tecnomecánica' => $this->technomechanical_expiration,
+            'Póliza Contractual' => $this->contractual_policy_expiration,
+            'Póliza Extracontractual' => $this->extra_contractual_policy_expiration,
+            'Tarjeta de Operación' => $this->operation_card_expiration,
+        ];
+
+        foreach ($documents as $name => $date) {
+            if (! $date) {
+                $errors[] = "El documento {$name} no tiene fecha de vigencia registrada.";
+            } elseif ($date->lt($today)) {
+                $errors[] = "El documento {$name} está vencido desde {$date->format('Y-m-d')}.";
+            }
+        }
+
+        return $errors;
+    }
+
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class);

@@ -41,6 +41,60 @@ class Employee extends Model
         ];
     }
 
+    public function getLicenseStatusAttribute(): string
+    {
+        if (! $this->driver_license_expiration) {
+            return 'Sin Licencia';
+        }
+
+        $today = now()->startOfDay();
+        if ($this->driver_license_expiration->lt($today)) {
+            return 'Vencida';
+        }
+
+        if ($this->driver_license_expiration->diffInDays($today, false) <= 0 && $this->driver_license_expiration->diffInDays($today, false) >= -30) {
+            return 'Por Vencer';
+        }
+
+        return 'Al Día';
+    }
+
+    public function getLicenseStatusColorAttribute(): string
+    {
+        return match ($this->license_status) {
+            'Vencida', 'Sin Licencia' => 'danger',
+            'Por Vencer' => 'warning',
+            default => 'success',
+        };
+    }
+
+    public function isEligibleToDrive(): bool
+    {
+        return empty($this->getEligibilityErrors());
+    }
+
+    public function getEligibilityErrors(): array
+    {
+        $errors = [];
+        $today = now()->startOfDay();
+
+        if ($this->status !== 'Activo') {
+            $errors[] = "El conductor se encuentra en estado '{$this->status}'.";
+        }
+
+        if ($this->employee_type !== 'Conductor') {
+            $errors[] = "El empleado tiene rol '{$this->employee_type}', no 'Conductor'.";
+        }
+
+        if (! $this->driver_license_expiration) {
+            $errors[] = 'El conductor no tiene fecha de vigencia de licencia de conducción registrada.';
+        } elseif ($this->driver_license_expiration->lt($today)) {
+            $errors[] = "La licencia de conducción está vencida desde {$this->driver_license_expiration->format('Y-m-d')}.";
+        }
+
+        return $errors;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
