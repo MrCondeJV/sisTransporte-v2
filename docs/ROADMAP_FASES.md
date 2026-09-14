@@ -92,6 +92,7 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
 * **Pruebas:**
   * Cálculo matemático de rendimiento por vehículo.
   * Actualización de odómetro y advertencias por inconsistencia de kilometraje.
+* **Estado:** ✅ **Completada.** (Implementado `FuelPerformanceCalculator`, recursos `MaintenanceResource` y `FuelRefillResource` con odómetro automático y suite `FuelAndMaintenanceTest`).
 
 ---
 
