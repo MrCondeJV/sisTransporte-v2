@@ -23,9 +23,9 @@ class FuecDocumentResource extends Resource
 {
     protected static ?string $model = FuecDocument::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedDocumentCheck;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentCheck;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Operaciones y Servicios';
+    protected static string|\UnitEnum|null $navigationGroup = 'Operaciones y Servicios';
 
     protected static ?string $navigationLabel = 'Documentos FUEC';
 

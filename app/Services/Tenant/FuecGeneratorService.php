@@ -82,7 +82,7 @@ class FuecGeneratorService
                 'phone' => $order->client->phone,
             ],
             'contract' => [
-                'number' => $order->contract?->contract_number ?? 'OCASIONAL-' . $order->order_number,
+                'number' => $order->contract?->contract_number ?? 'OCASIONAL-'.$order->order_number,
                 'type' => $order->contract?->contract_type ?? 'Ocasional / Grupo Específico',
                 'object' => $order->contract?->contract_object ?? "Transporte terrestre automotor especial de pasajeros en la ruta {$order->origin} a {$order->destination}",
             ],
@@ -104,7 +104,7 @@ class FuecGeneratorService
                 'type' => $order->vehicle->vehicle_type,
                 'capacity' => $order->vehicle->passenger_capacity,
                 'internal_number' => $order->vehicle->internal_number ?? '001',
-                'operation_card' => $order->vehicle->operation_card_number ?? 'TO-' . $order->vehicle->plate,
+                'operation_card' => $order->vehicle->operation_card_number ?? 'TO-'.$order->vehicle->plate,
                 'operation_card_exp' => $order->vehicle->operation_card_expiration?->format('d/m/Y'),
                 'contractual_exp' => $order->vehicle->contractual_policy_expiration?->format('d/m/Y'),
                 'extra_contractual_exp' => $order->vehicle->extra_contractual_policy_expiration?->format('d/m/Y'),

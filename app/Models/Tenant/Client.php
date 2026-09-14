@@ -26,7 +26,7 @@ class Client extends Model
     {
         return $this->type === 'Empresa'
             ? ($this->business_name ?? $this->document_number)
-            : trim(($this->first_name ?? '') . ' ' . ($this->last_name ?? ''));
+            : trim(($this->first_name ?? '').' '.($this->last_name ?? ''));
     }
 
     public function contracts(): HasMany

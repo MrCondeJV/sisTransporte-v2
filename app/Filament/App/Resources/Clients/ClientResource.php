@@ -7,29 +7,29 @@ use App\Filament\App\Resources\Clients\Pages\EditClient;
 use App\Filament\App\Resources\Clients\Pages\ListClients;
 use App\Filament\App\Resources\Clients\Pages\ViewClient;
 use App\Models\Tenant\Client;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 
 class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedBuildingOffice;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Comercial y Clientes';
+    protected static string|\UnitEnum|null $navigationGroup = 'Comercial y Clientes';
 
     protected static ?string $navigationLabel = 'Clientes';
 

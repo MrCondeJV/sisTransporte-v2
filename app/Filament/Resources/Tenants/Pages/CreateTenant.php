@@ -12,10 +12,10 @@ class CreateTenant extends CreateRecord
     protected function afterCreate(): void
     {
         $tenant = $this->record;
-        $subdomain = !empty($this->data['subdomain']) ? $this->data['subdomain'] : $tenant->id;
-        
+        $subdomain = ! empty($this->data['subdomain']) ? $this->data['subdomain'] : $tenant->id;
+
         $baseHost = parse_url(config('app.url'), PHP_URL_HOST) ?? 'localhost';
-        $domain = $subdomain . '.' . $baseHost;
+        $domain = $subdomain.'.'.$baseHost;
 
         $tenant->domains()->create([
             'domain' => $domain,

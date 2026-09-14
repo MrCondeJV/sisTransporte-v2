@@ -7,11 +7,17 @@ use App\Filament\App\Resources\Employees\Pages\EditEmployee;
 use App\Filament\App\Resources\Employees\Pages\ListEmployees;
 use App\Filament\App\Resources\Employees\Pages\ViewEmployee;
 use App\Models\Tenant\Employee;
+use Carbon\Carbon;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,19 +25,14 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedUserGroup;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Personal y Aliados';
+    protected static string|\UnitEnum|null $navigationGroup = 'Personal y Aliados';
 
     protected static ?string $navigationLabel = 'Conductores y Personal';
 
@@ -167,10 +168,17 @@ class EmployeeResource extends Resource
                     ->date('d/m/Y')
                     ->sortable()
                     ->color(function (?string $state): string {
-                        if (!$state) return 'gray';
-                        $date = \Carbon\Carbon::parse($state);
-                        if ($date->isPast()) return 'danger';
-                        if ($date->diffInDays(now()) <= 30) return 'warning';
+                        if (! $state) {
+                            return 'gray';
+                        }
+                        $date = Carbon::parse($state);
+                        if ($date->isPast()) {
+                            return 'danger';
+                        }
+                        if ($date->diffInDays(now()) <= 30) {
+                            return 'warning';
+                        }
+
                         return 'success';
                     }),
                 TextColumn::make('status')

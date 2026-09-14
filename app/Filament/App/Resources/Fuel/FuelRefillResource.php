@@ -30,9 +30,9 @@ class FuelRefillResource extends Resource
 {
     protected static ?string $model = FuelRefill::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedFire;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedFire;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Mantenimiento y Combustible';
+    protected static string|\UnitEnum|null $navigationGroup = 'Mantenimiento y Combustible';
 
     protected static ?string $navigationLabel = 'Control de Combustible';
 

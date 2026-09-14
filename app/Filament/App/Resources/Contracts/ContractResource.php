@@ -7,30 +7,31 @@ use App\Filament\App\Resources\Contracts\Pages\EditContract;
 use App\Filament\App\Resources\Contracts\Pages\ListContracts;
 use App\Filament\App\Resources\Contracts\Pages\ViewContract;
 use App\Models\Tenant\Contract;
+use Carbon\Carbon;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 
 class ContractResource extends Resource
 {
     protected static ?string $model = Contract::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedDocumentText;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Comercial y Clientes';
+    protected static string|\UnitEnum|null $navigationGroup = 'Comercial y Clientes';
 
     protected static ?string $navigationLabel = 'Contratos de Transporte';
 
@@ -118,10 +119,17 @@ class ContractResource extends Resource
                     ->date('d/m/Y')
                     ->sortable()
                     ->color(function (?string $state): string {
-                        if (!$state) return 'gray';
-                        $date = \Carbon\Carbon::parse($state);
-                        if ($date->isPast()) return 'danger';
-                        if ($date->diffInDays(now()) <= 30) return 'warning';
+                        if (! $state) {
+                            return 'gray';
+                        }
+                        $date = Carbon::parse($state);
+                        if ($date->isPast()) {
+                            return 'danger';
+                        }
+                        if ($date->diffInDays(now()) <= 30) {
+                            return 'warning';
+                        }
+
                         return 'success';
                     }),
                 TextColumn::make('value')

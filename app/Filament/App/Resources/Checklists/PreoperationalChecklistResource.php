@@ -7,7 +7,6 @@ use App\Filament\App\Resources\Checklists\Pages\EditPreoperationalChecklist;
 use App\Filament\App\Resources\Checklists\Pages\ListPreoperationalChecklists;
 use App\Filament\App\Resources\Checklists\Pages\ViewPreoperationalChecklist;
 use App\Models\Tenant\PreoperationalChecklist;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -34,9 +33,9 @@ class PreoperationalChecklistResource extends Resource
 {
     protected static ?string $model = PreoperationalChecklist::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedShieldCheck;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedShieldCheck;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Operaciones y Servicios';
+    protected static string|\UnitEnum|null $navigationGroup = 'Operaciones y Servicios';
 
     protected static ?string $navigationLabel = 'Checklist Preoperacional';
 

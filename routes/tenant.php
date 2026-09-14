@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Tenant\FuecVerificationController;
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -27,9 +28,9 @@ Route::middleware([
         return redirect('/app');
     });
 
-    Route::get('/fuec/verify/{fuec_number}', [\App\Http\Controllers\Tenant\FuecVerificationController::class, 'verify'])
+    Route::get('/fuec/verify/{fuec_number}', [FuecVerificationController::class, 'verify'])
         ->name('tenant.fuec.verify');
 
-    Route::get('/fuec/download/{fuec_number}', [\App\Http\Controllers\Tenant\FuecVerificationController::class, 'download'])
+    Route::get('/fuec/download/{fuec_number}', [FuecVerificationController::class, 'download'])
         ->name('tenant.fuec.download');
 });

@@ -29,9 +29,9 @@ class ServiceIncidentResource extends Resource
 {
     protected static ?string $model = ServiceIncident::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedExclamationTriangle;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedExclamationTriangle;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Operaciones y Servicios';
+    protected static string|\UnitEnum|null $navigationGroup = 'Operaciones y Servicios';
 
     protected static ?string $navigationLabel = 'Novedades e Incidentes';
 

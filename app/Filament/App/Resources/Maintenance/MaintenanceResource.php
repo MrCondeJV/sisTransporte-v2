@@ -31,9 +31,9 @@ class MaintenanceResource extends Resource
 {
     protected static ?string $model = Maintenance::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedWrenchScrewdriver;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Mantenimiento y Combustible';
+    protected static string|\UnitEnum|null $navigationGroup = 'Mantenimiento y Combustible';
 
     protected static ?string $navigationLabel = 'Mantenimientos';
 

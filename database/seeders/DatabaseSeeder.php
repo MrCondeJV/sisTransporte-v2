@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,16 +22,16 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $superAdminRole = \Spatie\Permission\Models\Role::firstOrCreate(['name' => 'SuperAdmin']);
+        $superAdminRole = Role::firstOrCreate(['name' => 'SuperAdmin']);
         if (! $admin->hasRole('SuperAdmin')) {
             $admin->assignRole($superAdminRole);
         }
 
-        $this->command->info("✅ Superadmin central creado y rol asignado: admin@sistransporte.com / admin123456");
+        $this->command->info('✅ Superadmin central creado y rol asignado: admin@sistransporte.com / admin123456');
 
         // 2. Crear Empresa Demo si no existe
         $tenant = Tenant::find('empresa1');
-        if (!$tenant) {
+        if (! $tenant) {
             $tenant = Tenant::create([
                 'id' => 'empresa1',
                 'name' => 'Transportes Kemuel S.A.S.',

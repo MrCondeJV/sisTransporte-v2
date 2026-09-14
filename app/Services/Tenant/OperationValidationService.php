@@ -22,7 +22,7 @@ class OperationValidationService
             $vehicleErrors = $vehicle->getEligibilityErrors();
             if (! empty($vehicleErrors)) {
                 $errors['vehicle_id'] = [
-                    "El vehículo {$vehicle->plate} no puede ser asignado: " . implode(' ', $vehicleErrors),
+                    "El vehículo {$vehicle->plate} no puede ser asignado: ".implode(' ', $vehicleErrors),
                 ];
             }
         }
@@ -31,7 +31,7 @@ class OperationValidationService
             $driverErrors = $driver->getEligibilityErrors();
             if (! empty($driverErrors)) {
                 $errors['driver_id'] = [
-                    "El conductor {$driver->name} no puede ser asignado: " . implode(' ', $driverErrors),
+                    "El conductor {$driver->name} no puede ser asignado: ".implode(' ', $driverErrors),
                 ];
             }
         }
@@ -40,7 +40,7 @@ class OperationValidationService
             $supportErrors = $supportDriver->getEligibilityErrors();
             if (! empty($supportErrors)) {
                 $errors['support_driver_id'] = [
-                    "El conductor de apoyo {$supportDriver->name} no puede ser asignado: " . implode(' ', $supportErrors),
+                    "El conductor de apoyo {$supportDriver->name} no puede ser asignado: ".implode(' ', $supportErrors),
                 ];
             }
         }
@@ -60,13 +60,13 @@ class OperationValidationService
         if ($newStatus === 'Asignada' || $newStatus === 'En Progreso') {
             if (! $order->vehicle_id) {
                 throw ValidationException::withMessages([
-                    'vehicle_id' => 'No se puede poner la orden en ' . $newStatus . ' sin un vehículo asignado.',
+                    'vehicle_id' => 'No se puede poner la orden en '.$newStatus.' sin un vehículo asignado.',
                 ]);
             }
 
             if (! $order->driver_id) {
                 throw ValidationException::withMessages([
-                    'driver_id' => 'No se puede poner la orden en ' . $newStatus . ' sin un conductor asignado.',
+                    'driver_id' => 'No se puede poner la orden en '.$newStatus.' sin un conductor asignado.',
                 ]);
             }
 
@@ -89,7 +89,7 @@ class OperationValidationService
 
                 if (! $vehicleChecklist) {
                     throw ValidationException::withMessages([
-                        'status' => 'No se puede iniciar el servicio sin un Checklist Preoperacional aprobado hoy para el vehículo ' . $order->vehicle->plate . '.',
+                        'status' => 'No se puede iniciar el servicio sin un Checklist Preoperacional aprobado hoy para el vehículo '.$order->vehicle->plate.'.',
                     ]);
                 }
             }

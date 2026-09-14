@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('vehicle_id')->constrained('vehicles')->cascadeOnDelete();
             $table->foreignId('driver_id')->nullable()->constrained('employees')->nullOnDelete();
             $table->foreignId('service_order_id')->nullable()->constrained('service_orders')->nullOnDelete();
-            
+
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->decimal('speed', 6, 2)->default(0); // km/h

@@ -7,28 +7,28 @@ use App\Filament\App\Resources\Partners\Pages\EditPartner;
 use App\Filament\App\Resources\Partners\Pages\ListPartners;
 use App\Filament\App\Resources\Partners\Pages\ViewPartner;
 use App\Models\Tenant\Partner;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 
 class PartnerResource extends Resource
 {
     protected static ?string $model = Partner::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedBriefcase;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Personal y Aliados';
+    protected static string|\UnitEnum|null $navigationGroup = 'Personal y Aliados';
 
     protected static ?string $navigationLabel = 'Aliados Estratégicos';
 

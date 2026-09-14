@@ -7,29 +7,29 @@ use App\Filament\App\Resources\Vehicles\Pages\EditVehicle;
 use App\Filament\App\Resources\Vehicles\Pages\ListVehicles;
 use App\Filament\App\Resources\Vehicles\Pages\ViewVehicle;
 use App\Models\Tenant\Vehicle;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Section;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Filament\Actions\EditAction;
-use Filament\Actions\ViewAction;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 
 class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedTruck;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedTruck;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Flota y Equipos';
+    protected static string|\UnitEnum|null $navigationGroup = 'Flota y Equipos';
 
     protected static ?string $navigationLabel = 'Vehículos';
 

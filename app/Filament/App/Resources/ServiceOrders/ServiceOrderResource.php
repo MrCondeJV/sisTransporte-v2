@@ -6,8 +6,6 @@ use App\Filament\App\Resources\ServiceOrders\Pages\CreateServiceOrder;
 use App\Filament\App\Resources\ServiceOrders\Pages\EditServiceOrder;
 use App\Filament\App\Resources\ServiceOrders\Pages\ListServiceOrders;
 use App\Filament\App\Resources\ServiceOrders\Pages\ViewServiceOrder;
-use App\Models\Tenant\Client;
-use App\Models\Tenant\Contract;
 use App\Models\Tenant\Employee;
 use App\Models\Tenant\ServiceOrder;
 use App\Models\Tenant\Vehicle;
@@ -37,9 +35,9 @@ class ServiceOrderResource extends Resource
 {
     protected static ?string $model = ServiceOrder::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
+    protected static string|\BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentList;
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Operaciones y Servicios';
+    protected static string|\UnitEnum|null $navigationGroup = 'Operaciones y Servicios';
 
     protected static ?string $navigationLabel = 'Órdenes de Servicio';
 
@@ -58,7 +56,7 @@ class ServiceOrderResource extends Resource
                             ->label('Número de Orden')
                             ->required()
                             ->unique(ignoreRecord: true)
-                            ->default(fn () => 'OS-' . date('Ymd') . '-' . strtoupper(substr(uniqid(), -4))),
+                            ->default(fn () => 'OS-'.date('Ymd').'-'.strtoupper(substr(uniqid(), -4))),
 
                         Select::make('client_id')
                             ->label('Cliente')
