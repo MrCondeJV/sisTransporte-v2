@@ -98,9 +98,13 @@ Permite crear empresas, configurar subdominios y supervisar el estado de las bas
 
 ### 2. Panel Operativo de la Empresa Demo (`empresa1`)
 Panel de administración de la empresa conectada a su base de datos física `sistransporte_tenant_empresa1`.
-* **URL:** [http://empresa1.sistransporte-v2.test/app](http://empresa1.sistransporte-v2.test/app)
-* **Email:** `admin@empresa.com`
-* **Contraseña:** `admin123456`
+* **Acceso Directo (Recomendado en Windows/Local):** [http://sistransporte-v2.test/app](http://sistransporte-v2.test/app) (o `http://sistransporte-v2.test/app?tenant=empresa1`)
+* **Acceso desde el Panel Central:** En [http://sistransporte-v2.test/admin/tenants](http://sistransporte-v2.test/admin/tenants), hacer clic en el botón verde **"Ingresar a Empresa"** (↗️) en la fila de la empresa.
+* **Acceso por Subdominio (Producción o con hosts configurado):** [http://empresa1.sistransporte-v2.test/app](http://empresa1.sistransporte-v2.test/app) *(En Windows requiere agregar `127.0.0.1 empresa1.sistransporte-v2.test` en `C:\Windows\System32\drivers\etc\hosts`)*.
+* **Credenciales de acceso:**
+  * **Email:** `admin@empresa.com`
+  * **Contraseña:** `admin123456`
+
 
 ---
 
