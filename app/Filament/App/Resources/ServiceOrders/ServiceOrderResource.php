@@ -11,6 +11,7 @@ use App\Models\Tenant\Contract;
 use App\Models\Tenant\Employee;
 use App\Models\Tenant\ServiceOrder;
 use App\Models\Tenant\Vehicle;
+use App\Services\Tenant\FuecGeneratorService;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
@@ -18,6 +19,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -265,6 +267,40 @@ class ServiceOrderResource extends Resource
             ->actions([
                 ViewAction::make(),
                 EditAction::make(),
+
+                Action::make('emitir_fuec')
+                    ->label('Emitir FUEC')
+                    ->icon(Heroicon::OutlinedDocumentCheck)
+                    ->color('warning')
+                    ->requiresConfirmation()
+                    ->modalHeading('¿Emitir FUEC Oficial?')
+                    ->modalDescription('Se generará el Formato Único de Extracto de Contrato con número consecutivo oficial y código QR de validación.')
+                    ->visible(fn (ServiceOrder $record) => ! $record->fuec && $record->vehicle_id && $record->driver_id)
+                    ->action(function (ServiceOrder $record) {
+                        try {
+                            $fuec = app(FuecGeneratorService::class)->generate($record);
+                            Notification::make()
+                                ->title('FUEC Emitido con Éxito')
+                                ->body("N° Oficial: {$fuec->fuec_number}")
+                                ->success()
+                                ->send();
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('Error al emitir FUEC')
+                                ->body($e->getMessage())
+                                ->danger()
+                                ->send();
+                        }
+                    }),
+
+                Action::make('descargar_fuec')
+                    ->label('PDF FUEC')
+                    ->icon(Heroicon::OutlinedArrowDownTray)
+                    ->color('success')
+                    ->visible(fn (ServiceOrder $record) => (bool) $record->fuec)
+                    ->url(fn (ServiceOrder $record) => route('tenant.fuec.download', ['fuec_number' => $record->fuec?->fuec_number]))
+                    ->openUrlInNewTab(),
+
                 DeleteAction::make(),
             ])
             ->bulkActions([

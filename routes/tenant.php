@@ -26,4 +26,10 @@ Route::middleware([
     Route::get('/', function () {
         return redirect('/app');
     });
+
+    Route::get('/fuec/verify/{fuec_number}', [\App\Http\Controllers\Tenant\FuecVerificationController::class, 'verify'])
+        ->name('tenant.fuec.verify');
+
+    Route::get('/fuec/download/{fuec_number}', [\App\Http\Controllers\Tenant\FuecVerificationController::class, 'download'])
+        ->name('tenant.fuec.download');
 });
