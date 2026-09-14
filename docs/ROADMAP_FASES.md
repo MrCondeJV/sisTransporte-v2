@@ -123,6 +123,8 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
     * `POST /api/v1/gps/batch` (envío periódico de coordenadas)
 * **Pruebas:**
   * Tests de autenticación Sanctum y aislamiento tenant en API.
+  * Ciclo de vida completo móvil: login, profile, órdenes, checklist con firma base64, novedades/incidentes, recarga combustible con rendimiento y telemetría GPS.
+* **Estado:** ✅ **Completada.** (Implementado `IdentifyTenantForApi`, controladores `DriverAuthController`, `DriverOrderController`, `DriverChecklistController`, `DriverIncidentController`, `DriverFuelController`, `DriverTelemetryController`, suite `DriverApiTest` con 12 tests y 202 aserciones).
 
 ---
 
