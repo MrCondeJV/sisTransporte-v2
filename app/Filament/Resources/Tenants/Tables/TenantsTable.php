@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\Tenants\Tables;
 
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -52,6 +54,12 @@ class TenantsTable
                 //
             ])
             ->recordActions([
+                Action::make('enter_app')
+                    ->label('Ingresar a Empresa')
+                    ->icon(Heroicon::OutlinedArrowTopRightOnSquare)
+                    ->color('success')
+                    ->url(fn ($record) => url("/app?tenant={$record->id}"))
+                    ->openUrlInNewTab(),
                 ViewAction::make(),
                 EditAction::make(),
             ])
