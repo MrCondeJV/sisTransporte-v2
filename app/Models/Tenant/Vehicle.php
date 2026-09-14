@@ -50,6 +50,41 @@ class Vehicle extends Model
         ];
     }
 
+    public function getDocumentStatusAttribute(): string
+    {
+        $today = now()->startOfDay();
+        $fields = [
+            'SOAT' => $this->soat_expiration,
+            'Tecnomecánica' => $this->technomechanical_expiration,
+            'Póliza Contractual' => $this->contractual_policy_expiration,
+            'Póliza Extracontractual' => $this->extra_contractual_policy_expiration,
+            'Tarjeta de Operación' => $this->operation_card_expiration,
+        ];
+
+        foreach ($fields as $label => $date) {
+            if ($date && $date->lt($today)) {
+                return 'Vencido';
+            }
+        }
+
+        foreach ($fields as $label => $date) {
+            if ($date && $date->diffInDays($today, false) <= 0 && $date->diffInDays($today, false) >= -30) {
+                return 'Por Vencer';
+            }
+        }
+
+        return 'Al Día';
+    }
+
+    public function getDocumentStatusColorAttribute(): string
+    {
+        return match ($this->document_status) {
+            'Vencido' => 'danger',
+            'Por Vencer' => 'warning',
+            default => 'success',
+        };
+    }
+
     public function partner(): BelongsTo
     {
         return $this->belongsTo(Partner::class);

@@ -48,7 +48,7 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
 * **Pruebas:**
   * Validación de alertas por documentos vencidos o próximos a vencer.
   * CRUD y relaciones de vehículos con aliados y conductores.
-* **Estado:** 🔄 **En Progreso.**
+* **Estado:** ✅ **Completada.** (Implementación de modelos, migraciones tenant, recursos Filament v5 en AppPanel y pruebas automatizadas en `FleetAndPersonnelTest`).
 
 ---
 
