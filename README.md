@@ -131,6 +131,11 @@ Para probar operaciones, ciclo de vida de órdenes, checklist preoperacional y b
 php artisan test --filter=OperationsAndChecklistTest
 ```
 
+Para probar la emisión de FUEC oficial, generación de PDF, código QR y verificación pública (Fase 4):
+```bash
+php artisan test --filter=FuecGenerationTest
+```
+
 ---
 
 ## 📋 Hoja de Ruta del Proyecto
@@ -140,8 +145,8 @@ El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROAD
 * **Fase 1:** Núcleo Multi-tenant, Dominios y Autenticación Central *(✅ Completada)*.
 * **Fase 2:** Gestión de Flota, Personal, Clientes, Aliados y Contratos *(✅ Completada)*.
 * **Fase 3:** Operaciones, Órdenes de Servicio y Checklist Preoperacional *(✅ Completada)*.
-* **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación *(🔄 Próxima)*.
-* **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento.
+* **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación *(✅ Completada)*.
+* **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento *(🔄 Próxima)*.
 * **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard.
 * **Fase 7:** API REST para App Móvil de Conductores (Sanctum).
 * **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción.

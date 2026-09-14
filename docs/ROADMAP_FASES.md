@@ -79,6 +79,7 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
 * **Pruebas:**
   * Verificación de consecutivo único y estructura del FUEC.
   * Generación y lectura del código QR.
+* **Estado:** ✅ **Completada.** (Implementado `FuecGeneratorService`, plantilla oficial DomPDF, código QR con `chillerlan/php-qrcode`, portal de validación pública `/fuec/verify/{fuec_number}`, descarga `/fuec/download/{fuec_number}`, recurso `FuecDocumentResource` y suite `FuecGenerationTest`).
 
 ---
 
