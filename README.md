@@ -136,6 +136,11 @@ Para probar la emisión de FUEC oficial, generación de PDF, código QR y verifi
 php artisan test --filter=FuecGenerationTest
 ```
 
+Para probar el control de mantenimientos, costos y rendimiento de combustible km/galón (Fase 5):
+```bash
+php artisan test --filter=FuelAndMaintenanceTest
+```
+
 ---
 
 ## 📋 Hoja de Ruta del Proyecto
@@ -146,7 +151,7 @@ El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROAD
 * **Fase 2:** Gestión de Flota, Personal, Clientes, Aliados y Contratos *(✅ Completada)*.
 * **Fase 3:** Operaciones, Órdenes de Servicio y Checklist Preoperacional *(✅ Completada)*.
 * **Fase 4:** Motor de Emisión FUEC Oficial (PDF + QR) y Facturación *(✅ Completada)*.
-* **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento *(🔄 Próxima)*.
-* **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard.
+* **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento *(✅ Completada)*.
+* **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard *(🔄 Próxima)*.
 * **Fase 7:** API REST para App Móvil de Conductores (Sanctum).
 * **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción.
