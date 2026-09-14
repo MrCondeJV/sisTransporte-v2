@@ -37,4 +37,22 @@ class FuecVerificationController extends Controller
             ['Content-Type' => 'application/pdf']
         );
     }
+
+    /**
+     * Descarga del archivo PDF del FUEC por ID.
+     */
+    public function downloadById(int $id)
+    {
+        $fuec = FuecDocument::findOrFail($id);
+
+        if (! $fuec->pdf_path || ! Storage::disk('public')->exists($fuec->pdf_path)) {
+            abort(404, 'El archivo PDF del FUEC no se encuentra disponible.');
+        }
+
+        return Storage::disk('public')->download(
+            $fuec->pdf_path,
+            "FUEC_{$fuec->fuec_number}.pdf",
+            ['Content-Type' => 'application/pdf']
+        );
+    }
 }

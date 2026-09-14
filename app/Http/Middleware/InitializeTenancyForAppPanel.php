@@ -58,8 +58,8 @@ class InitializeTenancyForAppPanel
             if (str_contains($referer, '/admin')) {
                 return $next($request);
             }
-        } elseif (! $request->is('app') && ! $request->is('app/*')) {
-            // Si no es /app ni Livewire para /app, continuar sin tenancy (ej: / bienvenida)
+        } elseif (! $request->is('app') && ! $request->is('app/*') && ! $request->is('portal*') && ! $request->is('fuec*')) {
+            // Si no es /app, /portal, /fuec ni Livewire para /app, continuar sin tenancy
             return $next($request);
         }
 

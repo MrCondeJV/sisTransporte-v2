@@ -299,6 +299,50 @@ class ServiceOrderResource extends Resource
                     ->url(fn (ServiceOrder $record) => route('tenant.fuec.download', ['fuec_number' => $record->fuec?->fuec_number]))
                     ->openUrlInNewTab(),
 
+                Action::make('solicitar_cancelacion')
+                    ->label('Solicitar Cancelación')
+                    ->icon(Heroicon::OutlinedXCircle)
+                    ->color('warning')
+                    ->visible(fn (ServiceOrder $record) => in_array($record->status, ['Pendiente', 'Asignada', 'En Progreso']))
+                    ->form([
+                        \Filament\Forms\Components\Textarea::make('motivo')
+                            ->label('Motivo Detallado de la Cancelación')
+                            ->placeholder('Explique la razón de la solicitud de cancelación...')
+                            ->required(),
+                    ])
+                    ->action(function (ServiceOrder $record, array $data) {
+                        $user = auth()->user()?->name ?? 'Operador';
+                        $record->update([
+                            'service_notes' => trim(($record->service_notes ?? '') . "\n[SOLICITUD CANCELACIÓN {$user} - " . now()->format('Y-m-d H:i') . "]: " . $data['motivo']),
+                        ]);
+                        Notification::make()
+                            ->title('Solicitud de Cancelación Registrada')
+                            ->body('Se ha registrado la solicitud para revisión gerencial.')
+                            ->warning()
+                            ->send();
+                    }),
+
+                Action::make('aprobar_cancelacion')
+                    ->label('Aprobar Cancelación (Gerencia)')
+                    ->icon(Heroicon::OutlinedCheckBadge)
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->modalHeading('Aprobación Gerencial de Cancelación')
+                    ->modalDescription('¿Confirma la cancelación definitiva de esta orden de servicio?')
+                    ->visible(fn (ServiceOrder $record) => in_array($record->status, ['Pendiente', 'Asignada', 'En Progreso']))
+                    ->action(function (ServiceOrder $record) {
+                        $user = auth()->user()?->name ?? 'Gerencia';
+                        $record->update([
+                            'status' => 'Cancelada',
+                            'service_notes' => trim(($record->service_notes ?? '') . "\n[CANCELACIÓN APROBADA POR {$user} - " . now()->format('Y-m-d H:i') . "]"),
+                        ]);
+                        Notification::make()
+                            ->title('Orden de Servicio Cancelada')
+                            ->body("La orden #{$record->order_number} ha sido cancelada por gerencia.")
+                            ->danger()
+                            ->send();
+                    }),
+
                 DeleteAction::make(),
             ])
             ->bulkActions([

@@ -2,8 +2,230 @@
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+@source '../**/*.vue';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* =============================================================================
+   Variables Temáticas Dinámicas (Inspiradas en sys-POS)
+   ============================================================================= */
+:root {
+    --theme-primary: #2563eb;
+    --theme-primary-hover: #1d4ed8;
+    --theme-primary-focus: rgba(37, 99, 235, 0.25);
+}
+
+.bg-theme-primary {
+    background-color: var(--theme-primary) !important;
+}
+.text-theme-primary {
+    color: var(--theme-primary) !important;
+}
+.border-theme-primary {
+    border-color: var(--theme-primary) !important;
+}
+
+/* =============================================================================
+   Cursor Pointer Global — Todos los elementos interactivos/clickeables
+   ============================================================================= */
+@layer base {
+    button,
+    [type="button"],
+    [type="submit"],
+    [type="reset"],
+    [role="button"],
+    label[for],
+    label.cursor-pointer,
+    summary,
+    [onclick],
+    [wire\:click],
+    [@click],
+    a[href] {
+        cursor: pointer;
+    }
+
+    button:disabled,
+    [type="button"]:disabled,
+    [type="submit"]:disabled,
+    [type="reset"]:disabled,
+    button[disabled],
+    [disabled],
+    .disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+}
+
+/* ==========================================================================
+   Scrollbars Modernos y Sutiles (Estilo sys-POS)
+   ========================================================================== */
+main::-webkit-scrollbar {
+    width: 7px;
+}
+main::-webkit-scrollbar-track {
+    background: transparent;
+}
+main::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1; /* slate-300 */
+    border-radius: 9999px;
+}
+main::-webkit-scrollbar-thumb:hover {
+    background-color: #94a3b8; /* slate-400 */
+}
+main {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+aside nav::-webkit-scrollbar {
+    width: 4px;
+}
+aside nav::-webkit-scrollbar-track {
+    background: transparent;
+}
+aside nav::-webkit-scrollbar-thumb {
+    background-color: #334155; /* slate-700 */
+    border-radius: 9999px;
+}
+aside nav::-webkit-scrollbar-thumb:hover {
+    background-color: #475569; /* slate-600 */
+}
+aside nav {
+    scrollbar-width: thin;
+    scrollbar-color: #334155 transparent;
+}
+
+/* ==========================================================================
+   Inputs, Textareas y Selects Globales Coherentes
+   ========================================================================== */
+select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-color: #ffffff !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+    background-position: right 0.75rem center !important;
+    background-repeat: no-repeat !important;
+    background-size: 1.15em 1.15em !important;
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+    padding-left: 0.875rem !important;
+    padding-right: 2.5rem !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.75rem !important;
+    color: #1e293b !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.5rem !important;
+    font-weight: 500 !important;
+    min-height: 2.5rem !important;
+    width: 100%;
+    display: block;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
+}
+
+select:hover {
+    border-color: #94a3b8 !important;
+}
+
+select:focus,
+select:focus-visible {
+    outline: none !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="tel"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+textarea {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.75rem !important;
+    color: #1e293b !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.5rem !important;
+    font-weight: 500 !important;
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+    padding-left: 0.875rem;
+    padding-right: 0.875rem;
+    min-height: 2.5rem !important;
+    width: 100%;
+    display: block;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="number"]:hover,
+input[type="search"]:hover,
+input[type="tel"]:hover,
+input[type="date"]:hover,
+textarea:hover {
+    border-color: #94a3b8 !important;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+    outline: none !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18) !important;
+}
+
+/* Inputs con Iconos Integrados */
+.relative:has(> [class*="left-0"]) input,
+.relative:has(> [class*="left-1"]) input,
+.relative:has(> [class*="left-2"]) input,
+.relative:has(> [class*="left-3"]) input,
+.relative:has(> [class*="left-4"]) input,
+input.pl-10, input[class*="pl-10"],
+input[data-icon-left] {
+    padding-left: 2.75rem !important;
+}
+
+[x-cloak] { display: none !important; }
+
+/* ==========================================================================
+   Estilos de Impresión Oficial (FUEC y Reportes de Transporte)
+   ========================================================================== */
+@media print {
+    @page {
+        size: letter portrait;
+        margin: 8mm 10mm;
+    }
+    body {
+        background-color: #ffffff !important;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+    aside, header, nav, .print\:hidden, .no-print, [role="dialog"] {
+        display: none !important;
+    }
+    main {
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
 }
