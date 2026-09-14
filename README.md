@@ -151,11 +151,40 @@ Para probar la API REST móvil de conductores con Sanctum (Fase 7):
 php artisan test --filter=DriverApiTest
 ```
 
+Para probar el motor ETL de migración de datos legados y auditoría (Fase 8):
+```bash
+php artisan test --filter=LegacyMigrationTest
+```
+
+---
+
+## 📦 Migración de Datos Legados (ETL) y Despliegue en Producción
+
+### 1. Ejecutar ETL de Migración desde el sistema anterior (`sisTransporte` v1)
+```bash
+# Simulación previa sin escribir en base de datos (Dry Run)
+php artisan migrate:legacy-data --tenant=empresa1 --dry-run
+
+# Ejecución real de migración
+php artisan migrate:legacy-data --tenant=empresa1
+```
+
+### 2. Despliegue en Producción con Docker Compose
+La infraestructura de producción está contenerizada con PHP 8.4-FPM, Nginx con soporte de subdominios Wildcard y reverse-proxy para WebSockets, Redis y Supervisor:
+
+```bash
+# Copiar plantilla de entorno de producción
+cp .env.production.example .env
+
+# Levantar servicios
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
 ---
 
 ## 📋 Hoja de Ruta del Proyecto
 
-El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROADMAP_FASES.md`](docs/ROADMAP_FASES.md):
+El desarrollo del proyecto se ha completado al 100% en sus 8 fases de ingeniería según [`docs/ROADMAP_FASES.md`](docs/ROADMAP_FASES.md):
 
 * **Fase 1:** Núcleo Multi-tenant, Dominios y Autenticación Central *(✅ Completada)*.
 * **Fase 2:** Gestión de Flota, Personal, Clientes, Aliados y Contratos *(✅ Completada)*.
@@ -164,4 +193,4 @@ El desarrollo está organizado en 8 fases documentadas en detalle en [`docs/ROAD
 * **Fase 5:** Mantenimientos Mecánicos y Control de Combustible con Rendimiento *(✅ Completada)*.
 * **Fase 6:** Telemetría GPS en Vivo, WebSockets (Reverb) y Ops Wallboard *(✅ Completada)*.
 * **Fase 7:** API REST para App Móvil de Conductores (Sanctum) *(✅ Completada)*.
-* **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción *(🔄 Próxima)*.
+* **Fase 8:** ETL de Migración de Datos Legados, Auditoría y Producción *(✅ Completada)*.

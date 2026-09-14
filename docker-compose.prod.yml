@@ -1,0 +1,86 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: sistransporte_app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "8080:8080" # Reverb WebSockets
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: https://sistransporte.com
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: sistransporte_central
+      DB_USERNAME: ${DB_USERNAME:-sistransporte}
+      DB_PASSWORD: ${DB_PASSWORD:-SecretProdPass2026}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_STORE: redis
+      SESSION_DRIVER: redis
+      QUEUE_CONNECTION: redis
+      BROADCAST_CONNECTION: reverb
+      REVERB_SERVER_HOST: 0.0.0.0
+      REVERB_SERVER_PORT: 8080
+      REVERB_HOST: sistransporte.com
+      REVERB_PORT: 443
+      REVERB_SCHEME: https
+    volumes:
+      - storage_data:/var/www/html/storage/app
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - sistransporte_net
+
+  mysql:
+    image: mysql:8.0
+    container_name: sistransporte_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-RootProdPass2026}
+      MYSQL_DATABASE: sistransporte_central
+      MYSQL_USER: ${DB_USERNAME:-sistransporte}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-SecretProdPass2026}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+      - --max_connections=300
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - sistransporte_net
+
+  redis:
+    image: redis:alpine
+    container_name: sistransporte_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - sistransporte_net
+
+volumes:
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
+  storage_data:
+    driver: local
+
+networks:
+  sistransporte_net:
+    driver: bridge
+

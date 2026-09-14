@@ -136,3 +136,5 @@ Este documento detalla el alcance, arquitectura, componentes y estado de impleme
   * Configuración de Docker de producción con Nginx, SSL Wildcard (`*.tudominio.com`) y Supervisor para colas y WebSockets.
 * **Pruebas:**
   * Verificación de integridad referencial post-migración.
+  * Modos de simulación `--dry-run` y ejecución real con reporte de auditoría (extraídos, importados, omitidos).
+* **Estado:** ✅ **Completada.** (Implementado `LegacyDataMigrationService`, comando Artisan `php artisan migrate:legacy-data`, configuración completa de Docker de producción `docker-compose.prod.yml`, `Dockerfile`, `default.conf` Nginx con reverse proxy Reverb y Supervisor `supervisord.conf`, `.env.production.example`, suite `LegacyMigrationTest` con 3 tests y 42 aserciones).
