@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Tenant;
+use Filament\Auth\Pages\Login;
 use Filament\Facades\Filament;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -13,7 +14,7 @@ class LoginTest extends TestCase
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
-        Livewire::test(\Filament\Auth\Pages\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'admin@sistransporte.com',
                 'password' => 'admin123456',
@@ -29,7 +30,7 @@ class LoginTest extends TestCase
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
-        Livewire::test(\Filament\Auth\Pages\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'admin@empresa.com',
                 'password' => 'admin123456',
@@ -53,7 +54,7 @@ class LoginTest extends TestCase
         $response = $this->get('/app/login');
         $response->assertSuccessful();
 
-        Livewire::test(\Filament\Auth\Pages\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'admin@empresa.com',
                 'password' => 'admin123456',
@@ -74,7 +75,7 @@ class LoginTest extends TestCase
 
         Filament::setCurrentPanel(Filament::getPanel('app'));
 
-        Livewire::test(\Filament\Auth\Pages\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'admin@sistransporte.com',
                 'password' => 'admin123456',
@@ -90,7 +91,7 @@ class LoginTest extends TestCase
     {
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
-        Livewire::test(\Filament\Auth\Pages\Login::class)
+        Livewire::test(Login::class)
             ->fillForm([
                 'email' => 'admin@sistransporte.com',
                 'password' => 'wrongpassword',

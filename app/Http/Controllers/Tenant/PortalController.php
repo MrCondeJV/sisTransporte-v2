@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tenant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tenant\Employee;
 use App\Models\Tenant\FuelRefill;
 use App\Models\Tenant\PreoperationalChecklist;
 use App\Models\Tenant\ServiceIncident;
@@ -72,7 +73,7 @@ class PortalController extends Controller
         $orden = ServiceOrder::findOrFail($id);
 
         $request->validate([
-            'final_odometer' => 'required|numeric|min:' . ($orden->start_mileage ?? 0),
+            'final_odometer' => 'required|numeric|min:'.($orden->start_mileage ?? 0),
         ]);
 
         $orden->update([
@@ -115,7 +116,7 @@ class PortalController extends Controller
 
         // Determinar si es apto: todos los ítems de seguridad deben estar en buen estado
         $esApto = ! in_array(false, $items, true);
-        $driver = \App\Models\Tenant\Employee::first();
+        $driver = Employee::first();
 
         PreoperationalChecklist::create([
             'vehicle_id' => $request->input('vehicle_id'),
@@ -132,7 +133,7 @@ class PortalController extends Controller
             'observations' => $request->input('notes', 'Inspección preoperacional móvil'),
         ]);
 
-        return back()->with('success', '¡Checklist preoperacional registrado correctamente! Estado: ' . ($esApto ? 'Aprobado (Apto para operar)' : 'Rechazado (Requiere revisión técnica)'));
+        return back()->with('success', '¡Checklist preoperacional registrado correctamente! Estado: '.($esApto ? 'Aprobado (Apto para operar)' : 'Rechazado (Requiere revisión técnica)'));
     }
 
     /**

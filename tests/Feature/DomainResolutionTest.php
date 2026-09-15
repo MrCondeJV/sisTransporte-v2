@@ -2,10 +2,25 @@
 
 namespace Tests\Feature;
 
+use App\Models\Tenant;
 use Tests\TestCase;
 
 class DomainResolutionTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $tenant = Tenant::firstOrCreate(
+            ['id' => 'empresa1'],
+            ['company_name' => 'Empresa Uno S.A.S.']
+        );
+
+        if (! $tenant->domains()->where('domain', 'empresa1.sistransporte-v2.test')->exists()) {
+            $tenant->domains()->create(['domain' => 'empresa1.sistransporte-v2.test']);
+        }
+    }
+
     public function test_central_domain_redirects_to_admin(): void
     {
         $response = $this->get('http://sistransporte-v2.test/');

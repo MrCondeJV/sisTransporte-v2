@@ -75,15 +75,16 @@ class OperationValidationService
 
         if ($newStatus === 'En Progreso') {
             // Verificar si tiene al menos un checklist preoperacional aprobado para hoy
+            $today = now()->toDateString();
             $hasChecklist = $order->checklists()
-                ->where('date', now()->toDateString())
+                ->whereDate('date', $today)
                 ->where('is_approved', true)
                 ->exists();
 
             if (! $hasChecklist && $order->vehicle) {
                 // También verificamos si el vehículo tiene un checklist aprobado hoy en general
                 $vehicleChecklist = $order->vehicle->checklists()
-                    ->where('date', now()->toDateString())
+                    ->whereDate('date', $today)
                     ->where('is_approved', true)
                     ->exists();
 

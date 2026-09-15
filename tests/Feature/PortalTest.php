@@ -85,16 +85,16 @@ class PortalTest extends TestCase
             ['contract_number' => 'CTR-TEST-999'],
             [
                 'client_id' => $client->id,
-                'contract_type' => 'escolar',
+                'contract_type' => 'Escolar',
                 'contract_object' => 'Transporte escolar de estudiantes',
                 'start_date' => now()->toDateString(),
                 'end_date' => now()->addMonths(6)->toDateString(),
-                'status' => 'vigente',
+                'status' => 'Vigente',
             ]
         );
 
         $order = ServiceOrder::create([
-            'order_number' => 'ODS-PORTAL-' . uniqid(),
+            'order_number' => 'ODS-PORTAL-'.uniqid(),
             'client_id' => $client->id,
             'contract_id' => $contract->id,
             'vehicle_id' => $vehicle->id,

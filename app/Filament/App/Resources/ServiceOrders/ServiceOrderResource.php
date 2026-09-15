@@ -10,23 +10,23 @@ use App\Models\Tenant\Employee;
 use App\Models\Tenant\ServiceOrder;
 use App\Models\Tenant\Vehicle;
 use App\Services\Tenant\FuecGeneratorService;
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -305,7 +305,7 @@ class ServiceOrderResource extends Resource
                     ->color('warning')
                     ->visible(fn (ServiceOrder $record) => in_array($record->status, ['Pendiente', 'Asignada', 'En Progreso']))
                     ->form([
-                        \Filament\Forms\Components\Textarea::make('motivo')
+                        Textarea::make('motivo')
                             ->label('Motivo Detallado de la Cancelación')
                             ->placeholder('Explique la razón de la solicitud de cancelación...')
                             ->required(),
@@ -313,7 +313,7 @@ class ServiceOrderResource extends Resource
                     ->action(function (ServiceOrder $record, array $data) {
                         $user = auth()->user()?->name ?? 'Operador';
                         $record->update([
-                            'service_notes' => trim(($record->service_notes ?? '') . "\n[SOLICITUD CANCELACIÓN {$user} - " . now()->format('Y-m-d H:i') . "]: " . $data['motivo']),
+                            'service_notes' => trim(($record->service_notes ?? '')."\n[SOLICITUD CANCELACIÓN {$user} - ".now()->format('Y-m-d H:i').']: '.$data['motivo']),
                         ]);
                         Notification::make()
                             ->title('Solicitud de Cancelación Registrada')
@@ -334,7 +334,7 @@ class ServiceOrderResource extends Resource
                         $user = auth()->user()?->name ?? 'Gerencia';
                         $record->update([
                             'status' => 'Cancelada',
-                            'service_notes' => trim(($record->service_notes ?? '') . "\n[CANCELACIÓN APROBADA POR {$user} - " . now()->format('Y-m-d H:i') . "]"),
+                            'service_notes' => trim(($record->service_notes ?? '')."\n[CANCELACIÓN APROBADA POR {$user} - ".now()->format('Y-m-d H:i').']'),
                         ]);
                         Notification::make()
                             ->title('Orden de Servicio Cancelada')

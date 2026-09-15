@@ -29,6 +29,11 @@ class Client extends Model
             : trim(($this->first_name ?? '').' '.($this->last_name ?? ''));
     }
 
+    public function getNameAttribute(): string
+    {
+        return $this->display_name;
+    }
+
     public function contracts(): HasMany
     {
         return $this->hasMany(Contract::class);

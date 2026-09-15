@@ -31,10 +31,6 @@ Route::middleware([
     InitializeTenancyByDomain::class,
     PreventAccessFromCentralDomains::class,
 ])->group(function () {
-    Route::get('/', function () {
-        return redirect('/app');
-    });
-
     Route::get('/fuec/verify/{fuec_number}', [FuecVerificationController::class, 'verify'])
         ->name('tenant.fuec.verify');
 

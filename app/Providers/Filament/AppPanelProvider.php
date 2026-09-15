@@ -2,17 +2,19 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\App\Pages\Dashboard;
+use App\Filament\App\Widgets\AppDashboardBannerWidget;
+use App\Filament\App\Widgets\FleetAndOperationsActivityWidget;
+use App\Filament\App\Widgets\TransportKpiOverviewWidget;
 use App\Http\Middleware\InitializeTenancyForAppPanel;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -28,10 +30,15 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('app')
             ->colors([
-                'primary' => Color::Blue,
+                'primary' => Color::Indigo,
             ])
             ->font('Instrument Sans')
             ->brandName('sisTransporte v2')
+            ->sidebarCollapsibleOnDesktop()
+            ->renderHook(
+                PanelsRenderHook::HEAD_END,
+                fn () => view('filament.custom-head'),
+            )
             ->login()
             ->discoverResources(in: app_path('Filament/App/Resources'), for: 'App\Filament\App\Resources')
             ->discoverPages(in: app_path('Filament/App/Pages'), for: 'App\Filament\App\Pages')
@@ -40,8 +47,9 @@ class AppPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/App/Widgets'), for: 'App\Filament\App\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
+                AppDashboardBannerWidget::class,
+                TransportKpiOverviewWidget::class,
+                FleetAndOperationsActivityWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

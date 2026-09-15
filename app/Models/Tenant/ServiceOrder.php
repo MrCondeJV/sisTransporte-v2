@@ -31,10 +31,13 @@ class ServiceOrder extends Model
         'passenger_contact_phone',
         'passengers_count',
         'service_notes',
+        'fare',
         'start_mileage',
         'end_mileage',
         'invoice_number',
         'invoice_file',
+        'is_paid',
+        'paid_at',
         'status',
     ];
 
@@ -47,6 +50,9 @@ class ServiceOrder extends Model
             'actual_end_time' => 'datetime',
             'start_mileage' => 'decimal:2',
             'end_mileage' => 'decimal:2',
+            'fare' => 'decimal:2',
+            'is_paid' => 'boolean',
+            'paid_at' => 'datetime',
         ];
     }
 
@@ -103,5 +109,10 @@ class ServiceOrder extends Model
     public function gpsLocations(): HasMany
     {
         return $this->hasMany(GpsLocation::class);
+    }
+
+    public function approvalRequests(): HasMany
+    {
+        return $this->hasMany(ServiceOrderApprovalRequest::class);
     }
 }

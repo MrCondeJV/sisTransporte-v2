@@ -41,6 +41,21 @@ class Employee extends Model
         ];
     }
 
+    public function getFirstNameAttribute(): string
+    {
+        $parts = explode(' ', trim($this->name ?? ''));
+
+        return $parts[0] ?? '';
+    }
+
+    public function getLastNameAttribute(): string
+    {
+        $parts = explode(' ', trim($this->name ?? ''));
+        array_shift($parts);
+
+        return implode(' ', $parts);
+    }
+
     public function getLicenseStatusAttribute(): string
     {
         if (! $this->driver_license_expiration) {
@@ -115,8 +130,18 @@ class Employee extends Model
         return $this->hasMany(PreoperationalChecklist::class, 'driver_id');
     }
 
+    public function preoperationalChecklists(): HasMany
+    {
+        return $this->hasMany(PreoperationalChecklist::class, 'driver_id');
+    }
+
     public function fuelRefills(): HasMany
     {
         return $this->hasMany(FuelRefill::class, 'driver_id');
+    }
+
+    public function vehicles(): HasMany
+    {
+        return $this->hasMany(Vehicle::class, 'default_driver_id');
     }
 }

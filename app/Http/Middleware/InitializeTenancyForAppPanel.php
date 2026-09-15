@@ -46,21 +46,18 @@ class InitializeTenancyForAppPanel
             }
         }
 
-        // 2. Si la petición es directamente para el panel central (/admin), NO inicializar tenancy
-        if ($request->is('admin') || $request->is('admin/*')) {
+        // 2. Si la petición es directamente para el panel central (/admin), login, logout o health check, NO inicializar tenancy
+        if ($request->is('admin') || $request->is('admin/*') || $request->is('login') || $request->is('logout') || $request->is('up')) {
             return $next($request);
         }
 
-        // 3. Peticiones de Livewire o APIs internas:
+        // 3. Peticiones de Livewire originadas desde /admin:
         if ($request->is('livewire*') || str_contains($request->path(), 'livewire')) {
             $referer = $request->header('referer') ?? '';
             // Si proviene del panel central /admin, NO inicializar tenancy
             if (str_contains($referer, '/admin')) {
                 return $next($request);
             }
-        } elseif (! $request->is('app') && ! $request->is('app/*') && ! $request->is('portal*') && ! $request->is('fuec*')) {
-            // Si no es /app, /portal, /fuec ni Livewire para /app, continuar sin tenancy
-            return $next($request);
         }
 
         // 4. Resolver Tenant para el panel operativo (/app o Livewire de /app):
